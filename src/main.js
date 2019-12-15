@@ -7,7 +7,7 @@ var engine = new ex.Engine({
     backgroundColor: ex.Color.Black,
 });
 
-var player = new shitSaac(width / 2, height / 2)
+var player = new shitSaac()
 
 engine.add(player);
 engine.start();
