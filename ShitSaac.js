@@ -8,33 +8,25 @@ class shitSaac extends ex.Actor {
         this.collisionType = ex.CollisionType.Active;
     }
 
-    update(engine, delta) {
-        super.update(engine , delta)
-
-        engine.input.keyboard.on('hold', (evt) => this.handleKeyEvent(evt));
+    onInitialize(engine) {
+        engine.input.keyboard.on('hold', (evt) => this.handleKeyEvent(evt, engine));
         engine.input.keyboard.on('release', () => { 
                 this.vel = ex.Vector.Zero.clone()
          });
     }
 
-    handleKeyEvent(evt) {
+    handleKeyEvent(evt, engine) {
         var dir = ex.Vector.Zero.clone()
 
-        switch(evt.key) {
-            case ex.Input.Keys.W:
-                    dir.y = -1;
-            break;
-            case ex.Input.Keys.S:
-                    dir.y = 1;
-            break;
-            case ex.Input.Keys.A:
-                    dir.x = -1;
-            break;
-            case ex.Input.Keys.D:
-                    dir.x = 1;
-            break;
-
-        }
+        if (evt.key === ex.Input.Keys.W && this.pos.y > 0) {
+            dir.y += -1;
+        } else if (evt.key === ex.Input.Keys.S && this.pos.y < 600) {
+            dir.y += 1;
+        } else if (evt.key === ex.Input.Keys.A && this.pos.x > 0) {
+            dir.x += -1;
+        } else if (evt.key === ex.Input.Keys.D && this.pos.x < 800) {
+            dir.x += 1;
+        }    
 
         if(dir.x !== 0 || dir.y !== 0) {
             this.vel = dir.normalize().scale(this.speed);
